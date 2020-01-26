@@ -1,6 +1,30 @@
 import argparse
 import configparser
 import ast
+import random
+import torch
+import numpy as np
+import shutil
+import os
+
+def create_safe_directory(directory, logger=None):
+    """Create a directory and archive the previous one if already existed."""
+    if os.path.exists(directory):
+        if logger is not None:
+            warn = "Directory {} already exists. Archiving it to {}.zip"
+            logger.warning(warn.format(directory, directory))
+        shutil.make_archive(directory, 'zip', directory)
+        shutil.rmtree(directory)
+    os.makedirs(directory)
+
+def set_seed(seed):
+    """Set all random seeds."""
+    if seed is not None:
+        np.random.seed(seed)
+        random.seed(seed)
+        torch.manual_seed(seed)
+        # if want pure determinism could uncomment below: but slower
+        # torch.backends.cudnn.deterministic = True
 
 def get_config_section(filenames, section):
     """Return a dictionary of the section of `.ini` config files. Every value

@@ -1,7 +1,14 @@
+
 import torch
 from torch import nn
 
-class LeNet5(nn.Module):
+# ALL encoders should be called Enccoder<Model>
+def get_encoder(model_type):
+    model_type = model_type.lower().capitalize()
+    return eval("{}".format(model_type))
+
+
+class Lenet5(nn.Module):
     def __init__(self, img_size, n_classes):
         """
          Input - 1x32x32
@@ -16,7 +23,7 @@ class LeNet5(nn.Module):
          tanh
          F7 - 10 (Output)
         """
-        super(LeNet5, self).__init__()
+        super(Lenet5, self).__init__()
         self.n_chan = img_size[0]
         self.n_classes = n_classes
 
