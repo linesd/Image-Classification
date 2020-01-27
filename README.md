@@ -10,6 +10,7 @@ This repository is a PyTorch implementation of an image classifier based on the 
 1. [Install](#install)
 2. [Run](#run)
 3. [Data](#data)
+4. [Results](#results)
 
 ## Install
 
@@ -87,3 +88,88 @@ To use your own data you should package it as a PyTorch `dataset` constructor. F
 
 You can so this by adding your data to the `YourData` class at the bottom of the file `datasets.py`. 
 
+## Results
+
+Pre-trained models for `fashionMNIST` and `MNIST` can be found in the results folder. 
+
+The following results were achieved on the `fashionMNIST` dataset:
+- Epochs: 15
+- learning rate: 5e-4
+- batch_size: 64
+
+```
+***************************************************
+*            Evaluating Train Accuracy            *
+***************************************************
+
+Train accuracy of the network on the 60000 test images: 98 %
+
+Accuracy of 0 - zero : 96 %
+Accuracy of 1 - one : 100 %
+Accuracy of 2 - two : 95 %
+Accuracy of 3 - three : 98 %
+Accuracy of 4 - four : 98 %
+Accuracy of 5 - five : 99 %
+Accuracy of 6 - six : 94 %
+Accuracy of 7 - seven : 99 %
+Accuracy of 8 - eight : 99 %
+Accuracy of 9 - nine : 97 %
+
+***************************************************
+*            Evaluating Test Accuracy             *
+***************************************************
+
+Test accuracy of the network on the 10000 test images: 91 %
+
+Accuracy of 0 - zero : 86 %
+Accuracy of 1 - one : 98 %
+Accuracy of 2 - two : 90 %
+Accuracy of 3 - three : 89 %
+Accuracy of 4 - four : 89 %
+Accuracy of 5 - five : 98 %
+Accuracy of 6 - six : 76 %
+Accuracy of 7 - seven : 99 %
+Accuracy of 8 - eight : 96 %
+Accuracy of 9 - nine : 91 %
+```
+
+And for the `MNIST` dataset:
+- Epochs: 10
+- learning rate: 5e-4
+- batch_size: 64
+
+```
+***************************************************
+*            Evaluating Train Accuracy            *
+***************************************************
+
+Train accuracy of the network on the 60000 test images: 99 %
+
+Accuracy of 0 - zero : 100 %
+Accuracy of 1 - one : 100 %
+Accuracy of 2 - two : 99 %
+Accuracy of 3 - three : 99 %
+Accuracy of 4 - four : 99 %
+Accuracy of 5 - five : 99 %
+Accuracy of 6 - six : 100 %
+Accuracy of 7 - seven : 99 %
+Accuracy of 8 - eight : 99 %
+Accuracy of 9 - nine : 99 %
+
+***************************************************
+*            Evaluating Test Accuracy             *
+***************************************************
+
+Test accuracy of the network on the 10000 test images: 99 %
+
+Accuracy of 0 - zero : 100 %
+Accuracy of 1 - one : 100 %
+Accuracy of 2 - two : 99 %
+Accuracy of 3 - three : 98 %
+Accuracy of 4 - four : 98 %
+Accuracy of 5 - five : 100 %
+Accuracy of 6 - six : 100 %
+Accuracy of 7 - seven : 99 %
+Accuracy of 8 - eight : 99 %
+Accuracy of 9 - nine : 98 %
+```
