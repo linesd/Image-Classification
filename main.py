@@ -129,8 +129,7 @@ def main(args):
         train_accuracy, class_train_accuracy = evaluate(train_loader)
         print('Train accuracy of the network on the 60000 test images: %d %%' % train_accuracy)
         for i in range(args.num_classes):
-            print('Accuracy of %5s : %2d %%' % (
-                     class_labels[i], class_train_accuracy[i]))
+            print('Accuracy of %5s : %2d %%' % (class_labels[i], class_train_accuracy[i]))
 
         print('***************************************************')
         print('*            Evaluating Test Accuracy             *')
@@ -138,8 +137,7 @@ def main(args):
         test_accuracy, class_test_accuracy = evaluate(test_loader)
         print('Test accuracy of the network on the 10000 test images: %d %%' % test_accuracy)
         for i in range(args.num_classes):
-            print('Accuracy of %5s : %2d %%' % (
-                     class_labels[i], class_test_accuracy[i]))
+            print('Accuracy of %5s : %2d %%' % (class_labels[i], class_test_accuracy[i]))
 
 if __name__ == '__main__':
     args = parse_arguments(sys.argv[1:])
