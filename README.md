@@ -3,7 +3,7 @@
 This repository is a PyTorch implementation of an image classifier based on the LeNet-5 CNN architecture.
 
  **Notes:**
-- Tested for python >= 3.5
+- Tested for python >= 3.6
 - Only tested for CPU
 
 **Table of Contents:**
@@ -86,7 +86,7 @@ Current datasets that can be used (these will download by themselves):
 To use your own data you should package it as a PyTorch `dataset` constructor. For more information see the link:
 - [dataset](https://pytorch.org/docs/stable/data.html)
 
-You can so this by adding your data to the `YourData` class at the bottom of the file `datasets.py`. 
+You can do this by adding your data to the `YourData` class at the bottom of the file `datasets.py`. 
 
 ## Results
 
