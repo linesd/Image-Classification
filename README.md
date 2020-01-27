@@ -104,16 +104,16 @@ The following results were achieved on the `fashionMNIST` dataset:
 
 Train accuracy of the network on the 60000 test images: 98 %
 
-Accuracy of 0 - zero : 96 %
-Accuracy of 1 - one : 100 %
-Accuracy of 2 - two : 95 %
-Accuracy of 3 - three : 98 %
-Accuracy of 4 - four : 98 %
-Accuracy of 5 - five : 99 %
-Accuracy of 6 - six : 94 %
-Accuracy of 7 - seven : 99 %
-Accuracy of 8 - eight : 99 %
-Accuracy of 9 - nine : 97 %
+Accuracy of T-shirt/top : 96 %
+Accuracy of Trouser : 100 %
+Accuracy of Pullover : 95 %
+Accuracy of Dress : 98 %
+Accuracy of  Coat : 98 %
+Accuracy of Sandal : 99 %
+Accuracy of Shirt : 95 %
+Accuracy of Sneaker : 99 %
+Accuracy of   Bag : 99 %
+Accuracy of Ankle boot : 96 %
 
 ***************************************************
 *            Evaluating Test Accuracy             *
@@ -121,16 +121,16 @@ Accuracy of 9 - nine : 97 %
 
 Test accuracy of the network on the 10000 test images: 91 %
 
-Accuracy of 0 - zero : 86 %
-Accuracy of 1 - one : 98 %
-Accuracy of 2 - two : 90 %
-Accuracy of 3 - three : 89 %
-Accuracy of 4 - four : 89 %
-Accuracy of 5 - five : 98 %
-Accuracy of 6 - six : 76 %
-Accuracy of 7 - seven : 99 %
-Accuracy of 8 - eight : 96 %
-Accuracy of 9 - nine : 91 %
+Accuracy of T-shirt/top : 81 %
+Accuracy of Trouser : 100 %
+Accuracy of Pullover : 81 %
+Accuracy of Dress : 95 %
+Accuracy of  Coat : 88 %
+Accuracy of Sandal : 97 %
+Accuracy of Shirt : 78 %
+Accuracy of Sneaker : 97 %
+Accuracy of   Bag : 96 %
+Accuracy of Ankle boot : 92 %
 ```
 
 And for the `MNIST` dataset:
