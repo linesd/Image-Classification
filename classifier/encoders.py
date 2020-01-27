@@ -28,15 +28,15 @@ class Lenet5(nn.Module):
         self.n_classes = n_classes
 
         # Convolutional Layers
-        self.conv1 = nn.Conv2d(self.n_chan, 6, kernel_size=(5, 5), stride=1)
+        self.conv1 = nn.Conv2d(self.n_chan, 32, kernel_size=(5, 5), stride=1)
         self.pool1 = nn.MaxPool2d(kernel_size=(2, 2), stride=2)
-        self.conv2 = nn.Conv2d(6, 16, kernel_size=(5, 5), stride=1)
+        self.conv2 = nn.Conv2d(32, 64, kernel_size=(5, 5), stride=1)
         self.pool2 = nn.MaxPool2d(kernel_size=(2, 2), stride=2)
-        self.conv3 = nn.Conv2d(16, 120, kernel_size=(5, 5), stride=1)
+        self.conv3 = nn.Conv2d(64, 128, kernel_size=(5, 5), stride=1)
 
         # Fully connected layers
-        self.lin1 = nn.Linear(120, 84)
-        self.lin2 = nn.Linear(84, self.n_classes)
+        self.lin1 = nn.Linear(128, 64)
+        self.lin2 = nn.Linear(64, self.n_classes)
 
     def forward(self, x):
         batch_size = x.size(0)

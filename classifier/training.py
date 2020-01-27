@@ -26,7 +26,6 @@ class Trainer():
 
     def __init__(self, model, optimizer, criterion,
                  device=torch.device("cpu"),
-                 logger=logging.getLogger(__name__),
                  save_dir="results"):
 
         self.device = device
@@ -34,11 +33,8 @@ class Trainer():
         self.criterion = criterion
         self.optimizer = optimizer
         self.save_dir = save_dir
-        self.logger = logger
-        self.logger.info("Training Device: {}".format(self.device))
 
-    def __call__(self, data_loader,
-                 epochs=10):
+    def __call__(self, data_loader, epochs=10):
         """
         Trains the model.
         Parameters
@@ -53,7 +49,9 @@ class Trainer():
         self.model.train()
 
         for epoch in range(epochs):
-            self._train_epoch(data_loader, epoch)
+            print("EPOCH %d" % (epoch + 1))
+            mean_epoch_loss = self._train_epoch(data_loader, epoch)
+            print('Average loss for epoch %d: %.3f' % (epoch + 1, mean_epoch_loss))
 
         self.model.eval()
 
@@ -72,6 +70,7 @@ class Trainer():
         mean_epoch_loss: float
             Mean loss per image
         """
+        running_loss = 0.0
         epoch_loss = 0.0
         for i, data in enumerate(data_loader):
             # pull the
@@ -86,8 +85,10 @@ class Trainer():
             self.optimizer.step()
 
             # Print some stats
+            running_loss += loss.item()
             epoch_loss += loss.item()
             if i % 200 == 199:  # print every 2000 mini-batches
-                print('[Epoch: %d, Num Minibatches: %5d] loss: %.3f' %
-                      (epoch + 1, i + 1, epoch_loss / 200))
-                epoch_loss = 0.0
+                print('[minibatch: %5d] loss: %.3f' % (i + 1, running_loss / 200))
+                running_loss = 0.0
+
+        return epoch_loss / len(data_loader)
