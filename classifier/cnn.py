@@ -3,9 +3,9 @@ from torch import nn
 from .encoders import get_encoder
 from classifier.utils.initialization import weights_init
 
-MODELS = ["Lenet5"]
+MODELS = ["Cnn1", "Cnn2"]
 
-def init_specific_model(model_type, img_size, num_classes):
+def init_specific_model(model_type, data_size, num_classes):
     """Return an instance of a VAE with encoder and decoder from `model_type`."""
     model_type = model_type.lower().capitalize()
     if model_type not in MODELS:
@@ -13,12 +13,12 @@ def init_specific_model(model_type, img_size, num_classes):
         raise ValueError(err.format(model_type, MODELS))
 
     encoder = get_encoder(model_type)
-    model = CNN(encoder, img_size, num_classes)
+    model = CNN(encoder, data_size, num_classes)
     model.model_type = model_type  # store to help reloading
     return model
 
 class CNN(nn.Module):
-    def __init__(self, encoder, img_size, num_classes):
+    def __init__(self, encoder, data_size, num_classes):
         """
         :param encoder:
         :param img_size:
@@ -26,9 +26,9 @@ class CNN(nn.Module):
         """
         super(CNN, self).__init__()
 
-        self.img_size = img_size
+        self.data_size = data_size
         self.num_classes = num_classes
-        self.encoder = encoder(img_size, num_classes)
+        self.encoder = encoder(data_size, num_classes)
 
         self.reset_parameters()
 

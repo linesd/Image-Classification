@@ -86,7 +86,7 @@ def load_model(directory, is_gpu=True, filename=MODEL_FILENAME):
     path_to_model = os.path.join(directory, MODEL_FILENAME)
 
     metadata = load_metadata(directory)
-    img_size = metadata["img_size"]
+    img_size = metadata["data_size"]
     num_classes = metadata["num_classes"]
     model_type = metadata["model_type"]
 
