@@ -50,12 +50,12 @@ class Trainer():
 
         for epoch in range(epochs):
             print("EPOCH %d" % (epoch + 1))
-            mean_epoch_loss = self._train_epoch(data_loader)
+            mean_epoch_loss = self._train_epoch(data_loader, epoch)
             print('Average loss for epoch %d: %.3f' % (epoch + 1, mean_epoch_loss))
 
         self.model.eval()
 
-    def _train_epoch(self, data_loader):
+    def _train_epoch(self, data_loader, epoch):
         """
         Trains the model for one epoch.
         Parameters
@@ -63,7 +63,8 @@ class Trainer():
         data_loader: torch.utils.data.DataLoader
         storer: dict
             Dictionary in which to store important variables for vizualisation.
-
+        epoch: int
+            Epoch number
         Return
         ------
         mean_epoch_loss: float
@@ -86,8 +87,8 @@ class Trainer():
             # Print some stats
             running_loss += loss.item()
             epoch_loss += loss.item()
-            if (i+1) % 10 == 0:  # print every 2000 mini-batches
-                print('[minibatch: %5d] loss: %.3f' % (i + 1, running_loss / 10))
+            if i % 200 == 199:  # print every 2000 mini-batches
+                print('[minibatch: %5d] loss: %.3f' % (i + 1, running_loss / 200))
                 running_loss = 0.0
 
         return epoch_loss / len(data_loader)

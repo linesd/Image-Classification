@@ -4,11 +4,8 @@ import ast
 import random
 import torch
 import numpy as np
-import pandas as pd
-from sklearn.preprocessing import StandardScaler
 import shutil
 import os
-
 
 def create_safe_directory(directory, logger=None):
     """Create a directory and archive the previous one if already existed."""
@@ -20,21 +17,14 @@ def create_safe_directory(directory, logger=None):
         shutil.rmtree(directory)
     os.makedirs(directory)
 
-def set_seed(model_type):
+def set_seed(seed):
     """Set all random seeds."""
-
-    if model_type == "Cnn1":
-        seed = 8
-    elif model_type == "Cnn2":
-        seed = 6
-    elif model_type == "Cnn_multihead":
-        seed = 7
-
-    np.random.seed(seed)
-    random.seed(seed)
-    torch.manual_seed(seed)
-    # if want pure determinism could uncomment below: but slower
-    # torch.backends.cudnn.deterministic = True
+    if seed is not None:
+        np.random.seed(seed)
+        random.seed(seed)
+        torch.manual_seed(seed)
+        # if want pure determinism could uncomment below: but slower
+        # torch.backends.cudnn.deterministic = True
 
 def get_config_section(filenames, section):
     """Return a dictionary of the section of `.ini` config files. Every value
@@ -81,18 +71,3 @@ class FormatterNoDuplicate(argparse.ArgumentDefaultsHelpFormatter):
                 # store DEFAULT for the last one
                 parts[-1] += ' %s' % args_string
             return ', '.join(parts)
-
-# load a single file as a numpy array
-def load_file(filepath):
-    dataframe = pd.read_csv(filepath, header=None, delim_whitespace=True)
-    return dataframe.values
-
-# load a list of files and return as a 3d numpy array
-def load_group(filenames, prefix=''):
-    loaded = list()
-    for name in filenames:
-        data = load_file(prefix + name)
-        loaded.append(data)
-    # stack group so that features are the 3rd dimension
-    loaded = np.dstack(loaded)
-    return loaded

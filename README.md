@@ -27,13 +27,13 @@ configuration can be found in `hyperparams.ini`.
 To run a custom experiment use `python main.py <experiment name> <params>`. For example:
 
 ```
-python main.py -n har_1 -d har -b 32 --lr 0.0001 
+python main.py -n test_fashion_1 -d fashion -b 32 --lr 0.0001 
 ```
 
 You can evaluate a pre-trained model with the following:
 
 ```
-python main.py -n har_1 --is-eval-only
+python main.py -n test_fashion_1 --is-eval-only
 ```
 
 ### Output

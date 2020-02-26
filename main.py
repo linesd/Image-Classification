@@ -2,11 +2,10 @@ import argparse
 import sys
 import os
 
-import torch
 from torch import optim
 from torch import nn
 
-from utils.datasets import get_dataloaders, get_data_size, get_num_classes, get_class_labels, DATASETS
+from utils.datasets import get_dataloaders, get_img_size, get_num_classes, get_class_labels, DATASETS
 from utils.helpers import get_config_section, FormatterNoDuplicate, set_seed, create_safe_directory
 from classifier.cnn import init_specific_model
 from classifier.training import Trainer
@@ -25,7 +24,7 @@ def parse_arguments(args_to_parse):
         args_to_parse: list of str
             Arguments to parse (split on whitespaces).
     """
-    description = "PyTorch implementation of CNN's for Human Activity Recognition"
+    description = "PyTorch implementation of convolutional neural network for image classification"
     default_config = get_config_section([CONFIG_FILE], "Preset")
     parser = argparse.ArgumentParser(description=description,
                                      formatter_class=FormatterNoDuplicate)
@@ -75,8 +74,8 @@ def main(args):
         args: argparse.Namespace
             Arguments
     """
-
-    set_seed(args.model_type)
+    seed = 2 if args.dataset == 'fashion' else 4 # TODO: fix initialisation bug (you may need to change the seed for your data)
+    set_seed(seed)
     exp_dir = os.path.join(RES_DIR, args.name)
 
     if not args.is_eval_only:
@@ -89,18 +88,16 @@ def main(args):
                                        batch_size=args.batch_size)
 
         # PREPARES MODEL
-        args.data_size = get_data_size(args.dataset)
+        args.img_size = get_img_size(args.dataset)
         args.num_classes = get_num_classes(args.dataset)
-        model = init_specific_model(args.model_type, args.data_size, args.num_classes)
-
-        # PREPARES OPTIMIZER AND CRITERION
-        optimizer = optim.Adam(model.parameters(), lr=args.lr)
-        criterion = nn.CrossEntropyLoss()
+        model = init_specific_model(args.model_type, args.img_size, args.num_classes)
 
         # TRAINS
         print('***************************************************')
         print('*                 Training Model                  *')
         print('***************************************************')
+        optimizer = optim.Adam(model.parameters(), lr=args.lr)
+        criterion = nn.CrossEntropyLoss()
         trainer = Trainer(model, optimizer, criterion)
         trainer(train_loader, args.epochs)
 
@@ -124,34 +121,23 @@ def main(args):
 
         # EVALUATE FOR TRAIN AND TEST
         class_labels = get_class_labels(args.dataset)
-        evaluate = Evaluator(model, args.num_classes, class_labels)
+        evaluate = Evaluator(model, args.num_classes)
 
         print('***************************************************')
         print('*            Evaluating Train Accuracy            *')
         print('***************************************************')
-        train_accuracy, class_train_accuracy, confusion = evaluate(train_loader)
-        print('Train accuracy of the network on the %i train sequences: %.2f %%' %
-              (len(train_loader.dataset), train_accuracy))
+        train_accuracy, class_train_accuracy = evaluate(train_loader)
+        print('Train accuracy of the network on the 60000 test images: %d %%' % train_accuracy)
         for i in range(args.num_classes):
-            print('Accuracy of class %i: %5s : %.2f %%' % (i, class_labels[i], class_train_accuracy[i]))
-        print("\n")
-        print("Confusion matrix:")
-        print("--------------------------------")
-        print(confusion)
-        print("\n")
+            print('Accuracy of %5s : %2d %%' % (class_labels[i], class_train_accuracy[i]))
 
         print('***************************************************')
         print('*            Evaluating Test Accuracy             *')
         print('***************************************************')
-        test_accuracy, class_test_accuracy, confusion = evaluate(test_loader)
-        print('Test accuracy of the network on the %i test sequences: %.2f %%' %
-              (len(test_loader.dataset), test_accuracy))
+        test_accuracy, class_test_accuracy = evaluate(test_loader)
+        print('Test accuracy of the network on the 10000 test images: %d %%' % test_accuracy)
         for i in range(args.num_classes):
-            print('Accuracy of class %i: %5s : %.2f %%' % (i, class_labels[i], class_test_accuracy[i]))
-        print("\n")
-        print("Confusion matrix:")
-        print("--------------------------------")
-        print(confusion)
+            print('Accuracy of %5s : %2d %%' % (class_labels[i], class_test_accuracy[i]))
 
 if __name__ == '__main__':
     args = parse_arguments(sys.argv[1:])
